@@ -33,7 +33,7 @@
             android:layout_gravity="center|left"
             android:onClick="@{() -> addViewModel.backButtonClick()}"
             android:padding="15dp"
-            android:text="취소"
+            android:text="뒤로가기"
             android:textColor="@color/red"
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -63,7 +63,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray" />
+        android:background="@color/gray_f0f0f0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -86,30 +86,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.076" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{addViewModel.titleTextLength}"
-            android:textColor="@color/purple_500"
-            android:textSize="13dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/et_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.951"
-            app:layout_constraintStart_toEndOf="@+id/tv_title"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.897" />
-
         <EditText
             android:id="@+id/et_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
-            android:paddingHorizontal="5dp"
-            android:paddingVertical="8dp"
+            android:padding="15dp"
             android:background="@drawable/back_r16_f0f0f0"
-            android:maxLines="1"
-            android:maxLength="10"
+            android:imeOptions="actionDone"
+            android:ems="10"
             android:hint="제목을 입력하세요."
             android:textSize="18dp"
             android:afterTextChanged="@{(text) -> addViewModel.onTitleTextChange(text)}"
@@ -135,32 +120,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.259" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{addViewModel.contentTextLength}"
-            android:textColor="@color/purple_500"
-            android:textSize="13dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/et_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.961"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.962" />
-
         <EditText
             android:id="@+id/et_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
-            android:afterTextChanged="@{(text) -> addViewModel.onContenttextCgange(text)}"
+            android:padding="15dp"
+            android:afterTextChanged="@{(text) -> addViewModel.onContentTextChange(text)}"
+            android:ems="10"
+            android:imeOptions="actionDone"
             android:background="@drawable/back_r16_f0f0f0"
-            android:hint="제목을 입력하세요."
-            android:maxLength="10"
-            android:maxLines="1"
-            android:paddingHorizontal="5dp"
-            android:paddingVertical="8dp"
+            android:hint="내용을 입력하세요."
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

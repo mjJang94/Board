@@ -2,6 +2,7 @@ package com.mj.board.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.mj.board.R
 import com.mj.board.databinding.ActivityAddBoardBinding
@@ -33,5 +34,17 @@ class AddBoardActivity : AppCompatActivity() {
         viewmodel.finishActivity = {
             this.finish()
         }
+
+        viewmodel.insertComplete = {
+            Toast.makeText(this, "저장 완료!", Toast.LENGTH_SHORT).show()
+            afterSave()
+        }
+    }
+
+    private fun afterSave(){
+        binding.etTitle.setText("")
+        binding.etContent.setText("")
+        binding.etTitle.clearFocus()
+        binding.etContent.clearFocus()
     }
 }

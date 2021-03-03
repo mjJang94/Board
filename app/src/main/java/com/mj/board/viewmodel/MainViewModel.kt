@@ -11,6 +11,7 @@ import com.mj.board.database.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel(application: Application): AndroidViewModel(application){
 
@@ -26,14 +27,24 @@ class MainViewModel(application: Application): AndroidViewModel(application){
     //모든 저장 정보 불러오기
     fun getAllData(){
         GlobalScope.launch(Dispatchers.IO){
-            mutableLiveData.value = repository.getAllBoards()
+
+            val tmpData = repository.getAllBoards()
+
+            withContext(Dispatchers.Main){
+                mutableLiveData.value = tmpData
+            }
         }
     }
 
     //제목으로 검색하기
     fun findBoard(title: String){
         GlobalScope.launch(Dispatchers.IO){
-            mutableLiveData.value = repository.findBoardsByTitle(title)
+
+            val tmpData = repository.findBoardsByTitle(title)
+
+            withContext(Dispatchers.Main){
+                mutableLiveData.value = tmpData
+            }
         }
     }
 
