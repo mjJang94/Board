@@ -13,13 +13,13 @@ MVVM 패턴과 Repository 패턴을 이용하여 게시판 애플리케이션을
 5. 작성한 글의 제목에 따라 검색이 가능할 것.
 
 ## 라이브러리
-DataBinding   
-Coroutine   
-Koin   
-Room   
-LiveData   
+- DataBinding   
+- Coroutine   
+- Koin   
+- Room   
+- LiveData   
 
 ## 개발환경
-Android Studio   
-Kotlin   
-Git   
+- Android Studio   
+- Kotlin   
+- Git   
