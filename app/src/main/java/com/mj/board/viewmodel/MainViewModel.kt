@@ -1,6 +1,7 @@
 package com.mj.board.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +20,8 @@ class MainViewModel(application: Application): AndroidViewModel(application){
     //(LiveData)게시판 데이터
     var mutableLiveData : MutableLiveData<MutableList<BoardEntity>> = MutableLiveData()
 
+    var goToAddBoard: (() -> Unit) ?= null
+
 
     //모든 저장 정보 불러오기
     fun getAllData(){
@@ -34,24 +37,21 @@ class MainViewModel(application: Application): AndroidViewModel(application){
         }
     }
 
-    //입력정보 저장하기
-    fun insertBoard(boardEntity: BoardEntity){
-        GlobalScope.launch(Dispatchers.IO){
-            repository.insertBoard(boardEntity)
-        }
-    }
-
     //정보 수정하기
     fun modifyBoard(boardEntity: BoardEntity){
         GlobalScope.launch(Dispatchers.IO){
             repository.modifyBoard(boardEntity)
         }
     }
-
+    //보드 삭제
     fun deleteBoard(boardEntity: BoardEntity){
         GlobalScope.launch(Dispatchers.IO){
             repository.deleteBoard(boardEntity)
         }
+    }
+
+    fun floatingBtnClickListener(){
+        goToAddBoard?.let { it() }
     }
 
 }

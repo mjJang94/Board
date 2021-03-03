@@ -1,6 +1,7 @@
 package com.mj.board.application
 
 import android.app.Application
+import com.mj.board.viewmodel.AddViewModel
 import com.mj.board.viewmodel.MainViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -15,13 +16,18 @@ class Application: Application() {
 
         startKoin {
             androidContext(this@Application)
-            modules(viewModelModule)
+            modules(listOf(mainViewModelModule, addViewModelModule))
         }
     }
 
 
-    val viewModelModule = module {
+    val mainViewModelModule = module {
 
         viewModel { MainViewModel(androidApplication())}
+    }
+
+    val addViewModelModule = module {
+
+        viewModel { AddViewModel(androidApplication())}
     }
 }
