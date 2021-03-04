@@ -28,11 +28,7 @@ class MainViewModel(application: Application): AndroidViewModel(application){
     fun getAllData(){
         GlobalScope.launch(Dispatchers.IO){
 
-            val tmpData = repository.getAllBoards()
-
-            withContext(Dispatchers.Main){
-                mutableLiveData.value = tmpData
-            }
+            mutableLiveData.postValue(repository.getAllBoards())
         }
     }
 
@@ -40,11 +36,7 @@ class MainViewModel(application: Application): AndroidViewModel(application){
     fun findBoard(title: String){
         GlobalScope.launch(Dispatchers.IO){
 
-            val tmpData = repository.findBoardsByTitle(title)
-
-            withContext(Dispatchers.Main){
-                mutableLiveData.value = tmpData
-            }
+            mutableLiveData.postValue(repository.findBoardsByTitle(title))
         }
     }
 

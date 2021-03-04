@@ -24,6 +24,9 @@ class AddViewModel(application: Application) : AndroidViewModel(application){
     //내용 데이터
     var contentText: MutableLiveData<String> = MutableLiveData()
 
+    //색상 데이터
+    var boardColor: MutableLiveData<String> = MutableLiveData("#ffffff")
+
     //데이터 삽입 완료 콜백
     var insertComplete: (() -> Unit) ?= null
 
@@ -48,13 +51,22 @@ class AddViewModel(application: Application) : AndroidViewModel(application){
     fun insertBoard(){
         GlobalScope.launch(Dispatchers.IO){
 
-            val boardEntity = BoardEntity(null, titleText.value, contentText.value, Util.getTodayDate(), Util.getTime())
+            val boardEntity = BoardEntity(
+                null,
+                titleText.value,
+                contentText.value,
+                boardColor.value,
+                Util.getTodayDate(),
+                Util.getTime()
+            )
+
             repository.insertBoard(boardEntity)
 
             withContext(Dispatchers.Main){
                 insertComplete?.let { it() }
                 titleText.value = ""
                 contentText.value = ""
+                boardColor.value = "#ffffff"
             }
         }
     }

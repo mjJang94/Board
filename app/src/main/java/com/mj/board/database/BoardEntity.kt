@@ -9,6 +9,8 @@ data class BoardEntity(
     @PrimaryKey(autoGenerate = true) val uid: Int?,
     @ColumnInfo(name = "title") var title: String?,
     @ColumnInfo(name = "content") var content: String?,
+    @ColumnInfo(name = "board_color") var color: String?,
     @ColumnInfo(name = "date") var date: String?,
     @ColumnInfo(name = "time") var time: String?
+
 )

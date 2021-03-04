@@ -16,7 +16,7 @@ class Util {
         @SuppressLint("SimpleDateFormat")
         fun getTodayDate(): String{
             val time = System.currentTimeMillis()
-            val dateFormat = SimpleDateFormat("yyyy년mm월dd일")
+            val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
 
             return dateFormat.format(Date(time))
         }
@@ -24,7 +24,7 @@ class Util {
         @SuppressLint("SimpleDateFormat")
         fun getTime(): String{
             val time = System.currentTimeMillis()
-            val dateFormat = SimpleDateFormat("HH:mm")
+            val dateFormat = SimpleDateFormat("aa hh:mm")
 
             return dateFormat.format(Date(time))
         }
