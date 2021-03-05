@@ -112,6 +112,7 @@ class MainActivity : AppCompatActivity() {
                     txtTime.text = boardEntity?.time
                     txtTitle.text = boardEntity?.title
                     txtContent.text = boardEntity?.content
+
                 }
             }
         }

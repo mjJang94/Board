@@ -48,7 +48,7 @@ class AddBoardActivity : AppCompatActivity() {
         }
     }
 
-    fun openColorPicker() {
+    private fun openColorPicker() {
         val colorPicker = ColorPicker(this)
         val colors: ArrayList<String> = ArrayList()
         colors.add("#ffffff")
@@ -68,10 +68,8 @@ class AddBoardActivity : AppCompatActivity() {
         colors.add("#ffcc80")
         colorPicker.setColors(colors)
             .setTitle("")
-            .setDefaultColorButton(Color.parseColor(viewmodel.boardColor.value))
             .disableDefaultButtons(true)
             .setColumns(5)
-            .setDefaultColorButton(Color.parseColor("#ffffff"))
             .setRoundColorButton(true)
             .addListenerButton("선택") { _, position, _ ->
                 colorPicker.dismissDialog()
