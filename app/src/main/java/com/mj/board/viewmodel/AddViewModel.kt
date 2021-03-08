@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class AddViewModel(application: Application) : AndroidViewModel(application){
+class AddViewModel(application: Application) : AndroidViewModel(application) {
 
     //viewmodel 내부에서 Repo 인스턴스 생성
     val repository = Repository(application)
@@ -25,20 +25,32 @@ class AddViewModel(application: Application) : AndroidViewModel(application){
     var contentText: MutableLiveData<String> = MutableLiveData()
 
     //색상 데이터
-    var boardColor: MutableLiveData<String> = MutableLiveData("#ffffff")
+    var boardColor: MutableLiveData<String> = MutableLiveData()
+
+    var uid: MutableLiveData<Int> = MutableLiveData()
+
+    var date: MutableLiveData<String> = MutableLiveData()
+
+    var time: MutableLiveData<String> = MutableLiveData()
+
+    var title: MutableLiveData<String> = MutableLiveData()
+
+    var content: MutableLiveData<String> = MutableLiveData()
+
+    var buttonName: MutableLiveData<String> = MutableLiveData()
 
     //데이터 삽입 완료 콜백
-    var insertComplete: (() -> Unit) ?= null
+    var insertComplete: (() -> Unit)? = null
 
     //뒤로가기 클릭 콜백
-    var finishActivity: (() -> Unit) ?= null
+    var finishActivity: (() -> Unit)? = null
 
 
     fun onTitleTextChange(editable: Editable?) {
         titleText.value = editable.toString()
     }
 
-    fun onContentTextChange(editable: Editable?){
+    fun onContentTextChange(editable: Editable?) {
         contentText.value = editable.toString()
     }
 
@@ -48,25 +60,51 @@ class AddViewModel(application: Application) : AndroidViewModel(application){
 
 
     //입력정보 저장하기
-    fun insertBoard(){
-        GlobalScope.launch(Dispatchers.IO){
+    //입력정보 수정하기
+    fun saveBoard() {
 
-            val boardEntity = BoardEntity(
-                null,
-                titleText.value,
-                contentText.value,
-                boardColor.value,
-                Util.getTodayDate(),
-                Util.getTime()
-            )
+        if (buttonName.value == "등록하기") {
 
-            repository.insertBoard(boardEntity)
+            GlobalScope.launch(Dispatchers.IO) {
 
-            withContext(Dispatchers.Main){
-                insertComplete?.let { it() }
-                titleText.value = ""
-                contentText.value = ""
-                boardColor.value = "#ffffff"
+                val boardEntity = BoardEntity(
+                    null,
+                    titleText.value,
+                    contentText.value,
+                    boardColor.value,
+                    Util.getTodayDate(),
+                    Util.getTime()
+                )
+
+                repository.insertBoard(boardEntity)
+
+                withContext(Dispatchers.Main) {
+                    titleText.value = ""
+                    contentText.value = ""
+                    boardColor.value = "#ffffff"
+                    insertComplete?.let { it() }
+                }
+            }
+        } else {
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val boardEntity = BoardEntity(
+                    uid.value,
+                    titleText.value,
+                    contentText.value,
+                    boardColor.value,
+                    Util.getTodayDate(),
+                    Util.getTime()
+                )
+
+                repository.modifyBoard(boardEntity)
+
+                withContext(Dispatchers.Main) {
+                    titleText.value = ""
+                    contentText.value = ""
+                    boardColor.value = "#ffffff"
+                    insertComplete?.let { it() }
+                }
             }
         }
     }

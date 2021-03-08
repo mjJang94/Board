@@ -15,6 +15,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mj.board.R
+import com.mj.board.application.Constant.BUTTON_NAME
+import com.mj.board.application.Constant.COLOR
+import com.mj.board.application.Constant.CONTENT
+import com.mj.board.application.Constant.DATE
+import com.mj.board.application.Constant.TIME
+import com.mj.board.application.Constant.TITLE
+import com.mj.board.application.Constant.UID
 import com.mj.board.database.BoardEntity
 import com.mj.board.databinding.ActivityMainBinding
 import com.mj.board.viewmodel.MainViewModel
@@ -23,7 +30,7 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewmodel: MainViewModel by inject()
+    private val viewModel: MainViewModel by inject()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
-        binding.mainViewModel = viewmodel
+        binding.mainViewModel = viewModel
 
         val adapter = MainRcyAdapter()
         val layoutManager = GridLayoutManager(this, 2)
@@ -50,19 +57,21 @@ class MainActivity : AppCompatActivity() {
         binding.rcyBoard.addItemDecoration(SpacesItemDecoration(2, 15))
 
         //LiveData 관찰
-        viewmodel.mutableLiveData.observe(this, Observer {
+        viewModel.mutableLiveData.observe(this, Observer {
             adapter.dataChange(it)
         })
 
-        viewmodel.goToAddBoard = {
-            startActivity(Intent(this, AddBoardActivity::class.java))
+        viewModel.goToAddBoard = {
+            val intent = Intent(this, AddBoardActivity::class.java)
+            intent.putExtra(BUTTON_NAME, "등록하기")
+            startActivity(intent)
         }
     }
 
     override fun onStart() {
         super.onStart()
         //모든 데이터 불러오기
-        viewmodel.getAllData()
+        viewModel.getAllData()
     }
 
     //rcy adapter
@@ -108,11 +117,12 @@ class MainActivity : AppCompatActivity() {
 
                 cvRow.setOnClickListener {
                     val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                    intent.putExtra("DATE", boardEntity?.date)
-                    intent.putExtra("TIME", boardEntity?.time)
-                    intent.putExtra("TITLE", boardEntity?.title)
-                    intent.putExtra("CONTENT", boardEntity?.content)
-                    intent.putExtra("COLOR", boardEntity?.color)
+                    intent.putExtra(UID, boardEntity?.uid)
+                    intent.putExtra(DATE, boardEntity?.date)
+                    intent.putExtra(TIME, boardEntity?.time)
+                    intent.putExtra(TITLE, boardEntity?.title)
+                    intent.putExtra(CONTENT, boardEntity?.content)
+                    intent.putExtra(COLOR, boardEntity?.color)
                     startActivity(intent)
                 }
 

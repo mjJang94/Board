@@ -12,6 +12,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/ll_whole"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -145,16 +146,13 @@
                             android:ems="10"
                             android:fontFamily="@font/nanum_square_regular"
                             android:hint="제목을 입력하세요."
+                            android:text="@{!addViewModel.title.empty ? addViewModel.title : null}"
                             android:imeOptions="actionDone"
                             android:padding="15dp"
-<<<<<<< HEAD
                             android:textColor="@color/black_1a1a1a"
-                            android:textSize="18dp" />
-=======
+                            android:textColorHint="@color/gray_6D6969"
                             android:textSize="15dp" />
-
                         </ScrollView>
->>>>>>> a23c8b193a154000a10ffffc222751a01ce1f876
                     </LinearLayout>
 
 
@@ -193,19 +191,6 @@
 
                         <ScrollView
                             android:layout_width="match_parent"
-<<<<<<< HEAD
-                            android:layout_height="wrap_content"
-                            android:afterTextChanged="@{(text) -> addViewModel.onContentTextChange(text)}"
-                            android:background="@drawable/back_r16_f0f0f0"
-                            android:ems="10"
-                            android:fontFamily="@font/nanum_square_regular"
-                            android:hint="내용을 입력하세요."
-                            android:imeOptions="actionDone"
-                            android:padding="15dp"
-                            android:textColor="@color/black_1a1a1a"
-                            android:textSize="18dp" />
-
-=======
                             android:layout_height="match_parent"
                             android:fillViewport="true"
                             android:scrollbars="none">
@@ -220,25 +205,26 @@
                                 android:fontFamily="@font/nanum_square_regular"
                                 android:gravity="top"
                                 android:hint="내용을 입력하세요."
+                                android:text="@{!addViewModel.content.empty ? addViewModel.content : null}"
                                 android:imeOptions="actionDone"
+                                android:textColor="@color/black_1a1a1a"
+                                android:textColorHint="@color/gray_6D6969"
                                 android:padding="15dp"
                                 android:textSize="15dp" />
                         </ScrollView>
->>>>>>> a23c8b193a154000a10ffffc222751a01ce1f876
                     </LinearLayout>
 
 
                     <TextView
-                        android:id="@+id/textView2"
                         android:layout_width="match_parent"
                         android:layout_height="72dp"
                         android:layout_marginHorizontal="15dp"
                         android:background="@drawable/back_r14_ffba00_out"
                         android:fontFamily="@font/nanum_square_round_extra_bold"
                         android:gravity="center"
-                        android:onClick="@{() -> addViewModel.insertBoard()}"
+                        android:onClick="@{() -> addViewModel.saveBoard()}"
                         android:padding="15dp"
-                        android:text="등록하기"
+                        android:text="@{addViewModel.buttonName}"
                         android:textColor="@color/black_1a1a1a"
                         android:textSize="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -253,5 +239,4 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
 </layout>

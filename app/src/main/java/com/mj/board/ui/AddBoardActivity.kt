@@ -2,27 +2,26 @@ package com.mj.board.ui
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.snackbar.Snackbar
 import com.mj.board.R
+import com.mj.board.application.Constant
 import com.mj.board.databinding.ActivityAddBoardBinding
 import com.mj.board.viewmodel.AddViewModel
 import org.koin.android.ext.android.inject
 import petrov.kristiyan.colorpicker.ColorPicker
-import petrov.kristiyan.colorpicker.ColorPicker.OnChooseColorListener
 
 
 class AddBoardActivity : AppCompatActivity() {
 
-    private val viewmodel: AddViewModel by inject()
+    private val viewModel: AddViewModel by inject()
     private lateinit var binding: ActivityAddBoardBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_board)
 
         init()
 
@@ -32,14 +31,25 @@ class AddBoardActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_board)
         binding.lifecycleOwner = this
-        binding.addViewModel = viewmodel
+        binding.addViewModel = viewModel
 
-        viewmodel.finishActivity = {
+        viewModel.buttonName.value = intent.getStringExtra(Constant.BUTTON_NAME)
+
+        //넘겨받은 데이터 구성
+        viewModel.uid.value = intent.getIntExtra(Constant.UID, -1)
+        viewModel.title.value = intent.getStringExtra(Constant.TITLE)
+        viewModel.content.value = intent.getStringExtra(Constant.CONTENT)
+        viewModel.time.value = intent.getStringExtra(Constant.TIME)
+        viewModel.date.value = intent.getStringExtra(Constant.DATE)
+        viewModel.boardColor.value = intent.getStringExtra(Constant.COLOR) ?: "#ffffff"
+        binding.llColor.setBackgroundColor(Color.parseColor(viewModel.boardColor.value))
+
+        viewModel.finishActivity = {
             this.finish()
         }
 
-        viewmodel.insertComplete = {
-            Toast.makeText(this, "저장 완료!", Toast.LENGTH_SHORT).show()
+        viewModel.insertComplete = {
+            Snackbar.make(binding.llWhole, "저장 완료!", Snackbar.LENGTH_LONG).show()
             afterSave()
         }
 
@@ -71,10 +81,13 @@ class AddBoardActivity : AppCompatActivity() {
             .disableDefaultButtons(true)
             .setColumns(5)
             .setRoundColorButton(true)
-            .addListenerButton("선택") { _, position, _ ->
+            .addListenerButton("확인") { _, position, _ ->
                 colorPicker.dismissDialog()
-                viewmodel.boardColor.value = colors[position]
-                binding.llColor.setBackgroundColor(Color.parseColor(colors[position]))
+
+                if (position >= 0) {
+                    viewModel.boardColor.value = colors[position]
+                    binding.llColor.setBackgroundColor(Color.parseColor(colors[position]))
+                }
             }
             .show() // dialog 생성
     }
@@ -84,6 +97,8 @@ class AddBoardActivity : AppCompatActivity() {
         binding.etContent.setText("")
         binding.etTitle.clearFocus()
         binding.etContent.clearFocus()
-        binding.llColor.setBackgroundColor(Color.parseColor(viewmodel.boardColor.value))
+        binding.llColor.setBackgroundColor(Color.parseColor(viewModel.boardColor.value))
+
+        finish()
     }
 }

@@ -17,7 +17,7 @@ class Application: Application() {
 
         startKoin {
             androidContext(this@Application)
-            modules(listOf(mainViewModelModule, addViewModelModule))
+            modules(listOf(mainViewModelModule, addViewModelModule, detailViewModelModule))
         }
     }
 
@@ -33,6 +33,6 @@ class Application: Application() {
     }
 
     val detailViewModelModule = module {
-        viewModel { DetailViewModel(androidContext()) }
+        viewModel { DetailViewModel(androidApplication()) }
     }
 }
