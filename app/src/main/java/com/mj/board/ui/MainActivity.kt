@@ -106,12 +106,23 @@ class MainActivity : AppCompatActivity() {
 
             fun bind(boardEntity: BoardEntity?) {
 
+                cvRow.setOnClickListener {
+                    val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                    intent.putExtra("DATE", boardEntity?.date)
+                    intent.putExtra("TIME", boardEntity?.time)
+                    intent.putExtra("TITLE", boardEntity?.title)
+                    intent.putExtra("CONTENT", boardEntity?.content)
+                    intent.putExtra("COLOR", boardEntity?.color)
+                    startActivity(intent)
+                }
+
                 boardEntity.let {
                     cvRow.setBackgroundColor(Color.parseColor(boardEntity?.color))
                     txtDate.text = boardEntity?.date
                     txtTime.text = boardEntity?.time
                     txtTitle.text = boardEntity?.title
                     txtContent.text = boardEntity?.content
+
                 }
             }
         }
