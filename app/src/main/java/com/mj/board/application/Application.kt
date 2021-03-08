@@ -2,6 +2,7 @@ package com.mj.board.application
 
 import android.app.Application
 import com.mj.board.viewmodel.AddViewModel
+import com.mj.board.viewmodel.DetailViewModel
 import com.mj.board.viewmodel.MainViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -29,5 +30,9 @@ class Application: Application() {
     val addViewModelModule = module {
 
         viewModel { AddViewModel(androidApplication())}
+    }
+
+    val detailViewModelModule = module {
+        viewModel { DetailViewModel(androidContext()) }
     }
 }
