@@ -1,11 +1,10 @@
-package com.mj.board.ui
+package com.mj.board.ui.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.mj.board.R
-import com.mj.board.application.Constant
 import com.mj.board.application.Constant.BUTTON_NAME
 import com.mj.board.application.Constant.COLOR
 import com.mj.board.application.Constant.CONTENT
@@ -29,24 +28,25 @@ class DetailActivity : AppCompatActivity() {
         init()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.findById(viewModel.uid.value!!)
+    }
+
     private fun init() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
         binding.lifecycleOwner = this
         binding.detailViewModel = viewModel
 
         //넘겨받은 데이터 구성
-        viewModel.uid.value = intent.getStringExtra(UID)
-        viewModel.title.value = intent.getStringExtra(TITLE)
-        viewModel.content.value = intent.getStringExtra(CONTENT)
-        viewModel.time.value = intent.getStringExtra(TIME)
-        viewModel.date.value = intent.getStringExtra(DATE)
-        viewModel.color.value = intent.getStringExtra(COLOR)
+        viewModel.uid.value = intent.getIntExtra(UID, -1)
 
-        //수정하기
+        //수정하기 이동
         viewModel.modifyClick = {
 
             val intent = Intent(this, AddBoardActivity::class.java)
-            intent.putExtra(UID, viewModel.uid.value)
+            intent.putExtra(UID, viewModel.uid.value!!)
             intent.putExtra(BUTTON_NAME, "수정하기")
             intent.putExtra(DATE, viewModel.date.value)
             intent.putExtra(TIME, viewModel.time.value)
@@ -55,6 +55,11 @@ class DetailActivity : AppCompatActivity() {
             intent.putExtra(COLOR, viewModel.color.value)
             startActivity(intent)
         }
+
+//        //배경화면 바뀌면 적용하기
+//        viewModel.color.observe(this, Observer {color ->
+//            binding.clBackground.setBackgroundColor(Color.parseColor(color))
+//        })
 
         //뒤로가기
         viewModel.finishActivity = {

@@ -1,4 +1,4 @@
-package com.mj.board.ui
+package com.mj.board.ui.activity
 
 import android.graphics.Color
 import android.os.Bundle
@@ -49,7 +49,7 @@ class AddBoardActivity : AppCompatActivity() {
         }
 
         viewModel.insertComplete = {
-            Snackbar.make(binding.llWhole, "저장 완료!", Snackbar.LENGTH_LONG).show()
+            Toast.makeText(this, "저장 완료!", Toast.LENGTH_SHORT).show()
             afterSave()
         }
 

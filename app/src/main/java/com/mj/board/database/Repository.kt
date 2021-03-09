@@ -35,4 +35,8 @@ class Repository(context: Context){
     suspend fun deleteBoard(boardEntity: BoardEntity){
         boardDao.delete(boardEntity)
     }
+
+    suspend fun findBoardByUid(uid: Int): BoardEntity{
+        return boardDao.findByUid(uid)
+    }
 }

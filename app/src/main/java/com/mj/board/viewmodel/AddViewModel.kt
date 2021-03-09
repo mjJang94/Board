@@ -18,12 +18,6 @@ class AddViewModel(application: Application) : AndroidViewModel(application) {
     //viewmodel 내부에서 Repo 인스턴스 생성
     val repository = Repository(application)
 
-    //제목 데이터
-    var titleText: MutableLiveData<String> = MutableLiveData()
-
-    //내용 데이터
-    var contentText: MutableLiveData<String> = MutableLiveData()
-
     //색상 데이터
     var boardColor: MutableLiveData<String> = MutableLiveData()
 
@@ -47,11 +41,11 @@ class AddViewModel(application: Application) : AndroidViewModel(application) {
 
 
     fun onTitleTextChange(editable: Editable?) {
-        titleText.value = editable.toString()
+        title.value = editable.toString()
     }
 
     fun onContentTextChange(editable: Editable?) {
-        contentText.value = editable.toString()
+        content.value = editable.toString()
     }
 
     fun backButtonClick() {
@@ -69,8 +63,8 @@ class AddViewModel(application: Application) : AndroidViewModel(application) {
 
                 val boardEntity = BoardEntity(
                     null,
-                    titleText.value,
-                    contentText.value,
+                    title.value,
+                    content.value,
                     boardColor.value,
                     Util.getTodayDate(),
                     Util.getTime()
@@ -79,8 +73,8 @@ class AddViewModel(application: Application) : AndroidViewModel(application) {
                 repository.insertBoard(boardEntity)
 
                 withContext(Dispatchers.Main) {
-                    titleText.value = ""
-                    contentText.value = ""
+                    title.value = ""
+                    content.value = ""
                     boardColor.value = "#ffffff"
                     insertComplete?.let { it() }
                 }
@@ -90,8 +84,8 @@ class AddViewModel(application: Application) : AndroidViewModel(application) {
             GlobalScope.launch(Dispatchers.IO) {
                 val boardEntity = BoardEntity(
                     uid.value,
-                    titleText.value,
-                    contentText.value,
+                    title.value,
+                    content.value,
                     boardColor.value,
                     Util.getTodayDate(),
                     Util.getTime()
@@ -100,8 +94,8 @@ class AddViewModel(application: Application) : AndroidViewModel(application) {
                 repository.modifyBoard(boardEntity)
 
                 withContext(Dispatchers.Main) {
-                    titleText.value = ""
-                    contentText.value = ""
+                    title.value = ""
+                    content.value = ""
                     boardColor.value = "#ffffff"
                     insertComplete?.let { it() }
                 }

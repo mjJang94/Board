@@ -1,5 +1,6 @@
-package com.mj.board.ui
+package com.mj.board.ui.fragment
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
@@ -8,74 +9,69 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mj.board.R
-import com.mj.board.application.Constant.BUTTON_NAME
-import com.mj.board.application.Constant.COLOR
-import com.mj.board.application.Constant.CONTENT
-import com.mj.board.application.Constant.DATE
-import com.mj.board.application.Constant.TIME
-import com.mj.board.application.Constant.TITLE
-import com.mj.board.application.Constant.UID
+import com.mj.board.application.Constant
 import com.mj.board.database.BoardEntity
-import com.mj.board.databinding.ActivityMainBinding
-import com.mj.board.viewmodel.MainViewModel
+import com.mj.board.databinding.FragmentMemoBinding
+import com.mj.board.ui.activity.AddBoardActivity
+import com.mj.board.ui.activity.DetailActivity
+import com.mj.board.viewmodel.MemoFragViewModel
 import org.koin.android.ext.android.inject
 
 
-class MainActivity : AppCompatActivity() {
+open class MemoFragment : Fragment() {
 
-    private val viewModel: MainViewModel by inject()
-    private lateinit var binding: ActivityMainBinding
+    val viewModel: MemoFragViewModel by inject()
+    lateinit var binding: FragmentMemoBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        init()
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_memo, container, false)
+        binding.lifecycleOwner = requireActivity()
+        binding.memoFragmentViewModel = viewModel
 
-    private fun init() {
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.lifecycleOwner = this
-        binding.mainViewModel = viewModel
-
-        val adapter = MainRcyAdapter()
-        val layoutManager = GridLayoutManager(this, 2)
+        val adapter = MemoRcyAdapter()
+        val layoutManager = GridLayoutManager(requireContext(), 2)
         binding.rcyBoard.adapter = adapter
         binding.rcyBoard.layoutManager = layoutManager
         // item이 추가되거나 삭제될 때 RecyclerView의 크기가 변경될 수 있고,
         // 그렇게 되면 계층 구조의 다른 View 크기가 변경될 가능성이 있기 때문이다.
         // 특히 item이 자주 추가/삭제되면 오류가 날 수도 있기에 setHasFixedSize true를 설정한다.
         binding.rcyBoard.setHasFixedSize(true)
-
         binding.rcyBoard.addItemDecoration(SpacesItemDecoration(2, 15))
 
-        //LiveData 관찰
-        viewModel.mutableLiveData.observe(this, Observer {
-            adapter.dataChange(it)
-        })
 
         viewModel.goToAddBoard = {
-            val intent = Intent(this, AddBoardActivity::class.java)
-            intent.putExtra(BUTTON_NAME, "등록하기")
+            val intent = Intent(requireActivity(), AddBoardActivity::class.java)
+            intent.putExtra(Constant.BUTTON_NAME, "등록하기")
             startActivity(intent)
         }
+
+        viewModel.boardData.observe(requireActivity(), Observer {data ->
+            adapter.dataChange(data)
+        })
+
+        return binding.root
     }
+
 
     override fun onStart() {
         super.onStart()
-        //모든 데이터 불러오기
         viewModel.getAllData()
     }
 
     //rcy adapter
-    inner class MainRcyAdapter : RecyclerView.Adapter<MainRcyAdapter.Holder>() {
+    inner class MemoRcyAdapter : RecyclerView.Adapter<MemoRcyAdapter.Holder>() {
 
         private var boardList: MutableList<BoardEntity>? = null
 
@@ -115,16 +111,21 @@ class MainActivity : AppCompatActivity() {
 
             fun bind(boardEntity: BoardEntity?) {
 
+                //클릭시
                 cvRow.setOnClickListener {
-                    val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                    intent.putExtra(UID, boardEntity?.uid)
-                    intent.putExtra(DATE, boardEntity?.date)
-                    intent.putExtra(TIME, boardEntity?.time)
-                    intent.putExtra(TITLE, boardEntity?.title)
-                    intent.putExtra(CONTENT, boardEntity?.content)
-                    intent.putExtra(COLOR, boardEntity?.color)
+                    val intent = Intent(requireActivity(), DetailActivity::class.java)
+                    intent.putExtra(Constant.UID, boardEntity?.uid)
                     startActivity(intent)
                 }
+
+                //롱클릭시
+                cvRow.setOnLongClickListener {
+
+                    showDialog(boardEntity!!)
+
+                    return@setOnLongClickListener  true
+                }
+
 
                 boardEntity.let {
                     cvRow.setBackgroundColor(Color.parseColor(boardEntity?.color))
@@ -136,7 +137,26 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        private fun showDialog(boardEntity: BoardEntity){
+            val builder =
+                AlertDialog.Builder(requireContext())
+            builder.setTitle("이 메모를 삭제할까요?")
+            builder.setPositiveButton(
+                "삭제"
+            ) { _, _ ->
+                viewModel.deleteBoard(boardEntity)
+            }
+            builder.setNegativeButton(
+                "취소"
+            ) { _, _ ->
+            }
+
+            builder.show()
+        }
     }
+
+
 
     //rcy decoration
     inner class SpacesItemDecoration(
