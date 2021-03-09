@@ -36,11 +36,17 @@
                 android:textColor="@color/black_1a1a1a"/>
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_f0f0f0" />
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/layout_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorHeight="4dp"
+            app:tabBackground="@color/white"
             app:tabIndicatorColor="@color/yellow_ffba00"
             app:tabSelectedTextColor="@color/black_1a1a1a"
             app:tabTextColor="@color/black_1a1a1a">

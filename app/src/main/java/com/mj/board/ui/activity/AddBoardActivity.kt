@@ -60,6 +60,8 @@ class AddBoardActivity : AppCompatActivity() {
 
     private fun openColorPicker() {
         val colorPicker = ColorPicker(this)
+        colorPicker.dialogViewLayout.setBackgroundColor(Color.parseColor("#ffffff"))
+
         val colors: ArrayList<String> = ArrayList()
         colors.add("#ffffff")
         colors.add("#ffab91")
@@ -89,6 +91,7 @@ class AddBoardActivity : AppCompatActivity() {
                     binding.llColor.setBackgroundColor(Color.parseColor(colors[position]))
                 }
             }
+
             .show() // dialog 생성
     }
 

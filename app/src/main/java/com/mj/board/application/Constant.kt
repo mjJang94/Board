@@ -9,4 +9,6 @@ object Constant {
     const val CONTENT = "CONTENT"
     const val COLOR = "COLOR"
     const val BUTTON_NAME = "BUTTON_NAME"
+
+    const val SCHEME = "select://action"
 }
