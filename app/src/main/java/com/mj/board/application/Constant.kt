@@ -10,5 +10,5 @@ object Constant {
     const val COLOR = "COLOR"
     const val BUTTON_NAME = "BUTTON_NAME"
 
-    const val SCHEME = "select://action"
+    const val SCHEME = "select://list"
 }

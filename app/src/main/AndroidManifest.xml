@@ -10,19 +10,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Board">
-
-
         <activity android:name=".ui.widget.SelectorActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:host="action" android:scheme="select" />
+                <data
+                    android:host="list"
+                    android:scheme="select" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.DetailActivity"/>
+        <activity android:name=".ui.activity.DetailActivity" />
         <activity
             android:name=".ui.activity.AddBoardActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -34,16 +36,16 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".ui.widget.WidgetProvider">
+        <receiver android:name=".ui.widget.WidgetProvider">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="android.action.MY_ACTION"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.action.MY_ACTION" />
+                <action android:name="android.action.SELECT" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_provider"/>
+                android:resource="@xml/widget_provider" />
         </receiver>
     </application>
 

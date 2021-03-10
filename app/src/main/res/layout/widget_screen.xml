@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_widget_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:background="@color/white"
     android:orientation="horizontal">
 
@@ -12,7 +14,9 @@
        android:id="@+id/txt_widget"
        android:layout_width="60dp"
        android:layout_height="60dp"
-       android:text="안녕"
+       android:gravity="center"
+       android:text="클릭하여\n메모선택"
        android:fontFamily="@font/nanum_square_bold"
-       android:textColor="@color/black_1a1a1a"/>
+       android:textColor="@color/black_1a1a1a"
+       android:background="@color/white"/>
 </LinearLayout>

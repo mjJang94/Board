@@ -1,10 +1,7 @@
 package com.mj.board.application
 
 import android.app.Application
-import com.mj.board.viewmodel.AddViewModel
-import com.mj.board.viewmodel.DetailViewModel
-import com.mj.board.viewmodel.MainViewModel
-import com.mj.board.viewmodel.MemoFragViewModel
+import com.mj.board.viewmodel.*
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -18,7 +15,7 @@ class Application : Application() {
 
         startKoin {
             androidContext(this@Application)
-            modules(listOf(mainViewModelModule, addViewModelModule, detailViewModelModule, memoFragViewModel))
+            modules(listOf(mainViewModelModule, addViewModelModule, detailViewModelModule, memoFragViewModel, selectorViewModel))
         }
     }
 
@@ -37,5 +34,9 @@ class Application : Application() {
 
     val memoFragViewModel = module {
         viewModel { MemoFragViewModel(androidApplication()) }
+    }
+
+    val selectorViewModel = module {
+        viewModel { SelectorViewModel(androidApplication()) }
     }
 }
