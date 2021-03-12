@@ -1,16 +1,6 @@
-# Board
+# 메모장
 
-MVVM 패턴과 Repository 패턴을 이용하여 게시판 애플리케이션을 제작해본다.
-
-제작에 따른 요구사항과 사용할 라이브러리는 아래와 같다.
-
-## 요구사항
-
-1. 앱을 실행했을 때 이전에 작성한 글들을 리스트로 노출할 것
-2. 글을 작성할때 제목은 10자 이하, 내용은 50자 이하로 제한할 것.
-3. 작성한 글은 리스트에 즉시 반영될 것.
-4. 작성한 글은 수정, 삭제가 되어야할 것.
-5. 작성한 글의 제목에 따라 검색이 가능할 것.
+MVVM 패턴을 기반으로 사용하고 싶은 라이브러리를 조합하여 만든 간단 메모앱
 
 ## 라이브러리
 - DataBinding   
@@ -18,8 +8,12 @@ MVVM 패턴과 Repository 패턴을 이용하여 게시판 애플리케이션을
 - Koin   
 - Room   
 - LiveData   
+- admob
 
 ## 개발환경
 - Android Studio   
 - Kotlin   
 - Git   
+
+## 이미지 출처
+- <div>Icons made by <a href="https://www.flaticon.com/authors/payungkead" title="Payungkead">Payungkead</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>   
