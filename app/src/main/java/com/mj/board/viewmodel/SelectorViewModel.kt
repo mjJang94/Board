@@ -19,7 +19,7 @@ class SelectorViewModel(application: Application): AndroidViewModel(application)
 
     fun getBoardList(){
         GlobalScope.launch(Dispatchers.IO){
-            info.postValue(repository.getAllBoards())
+            info.postValue(repository.getByLatestData())
         }
     }
 }

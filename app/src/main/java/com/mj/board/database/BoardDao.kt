@@ -10,8 +10,8 @@ interface BoardDao {
     suspend fun getAll(): MutableList<BoardEntity>
 
     //2. 제목 검색해서 가져오기
-    @Query("select * from BoardEntity where title like :title")
-    suspend fun findByTitle(title: String): MutableList<BoardEntity>
+    @Query("select * from BoardEntity where (title || content) like :keyword")
+    suspend fun findByTitle(keyword: String): MutableList<BoardEntity>
 
     //3. 입력하기
     @Insert
@@ -25,8 +25,15 @@ interface BoardDao {
     @Delete
     suspend fun delete(board: BoardEntity)
 
-    //6. 특정 데이터만 불러오기
+    //6. 특정 uid 기준으로 데이터 불러오기
     @Query("select * from BoardEntity where uid = :uid")
     suspend fun findByUid(uid: Int): BoardEntity
 
+    //7. 최근 내역 가져오기
+    @Query("select * from BoardEntity order by uid desc")
+    suspend fun getLatest(): MutableList<BoardEntity>
+
+    //8. 색상별 내역 가져오기
+    @Query("select * from BoardEntity order by board_color, uid desc")
+    suspend fun getByColor(): MutableList<BoardEntity>
 }

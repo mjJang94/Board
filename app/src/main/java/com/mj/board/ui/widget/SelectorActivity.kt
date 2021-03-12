@@ -12,6 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mj.board.R
+import com.mj.board.application.Constant.ACTION
+import com.mj.board.application.Constant.UID
+import com.mj.board.application.Constant.WIDGET_ID
 import com.mj.board.database.BoardEntity
 import com.mj.board.databinding.ActivitySelectorBinding
 import com.mj.board.viewmodel.SelectorViewModel
@@ -43,8 +46,8 @@ class SelectorActivity : AppCompatActivity() {
         binding.rcySelect.setHasFixedSize(true)
 
 
-        action = intent.getStringExtra("KEY")
-        widgetId = intent.getIntExtra("WIDGET_ID", -1)
+        action = intent.getStringExtra(ACTION)
+        widgetId = intent.getIntExtra(WIDGET_ID, -1)
 
         viewModel.getBoardList()
 
@@ -82,19 +85,21 @@ class SelectorActivity : AppCompatActivity() {
 
         inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
 
-            private var txtTitle: TextView = view.findViewById(R.id.txt_title)
+            private var txtTitle: TextView = view.findViewById(R.id.txt_selector_title)
+            private var txtDate: TextView = view.findViewById(R.id.txt_selector_date)
 
             fun bind(boardEntity: BoardEntity?) {
 
                 boardEntity.let {
                     txtTitle.text = boardEntity?.title
+                    txtDate.text = "${boardEntity?.date} ${boardEntity?.time} 작성"
 
                 }
 
                 txtTitle.setOnClickListener {
                     val intent = Intent(action)
-                    intent.putExtra("UID", boardEntity?.uid)
-                    intent.putExtra("WIDGET_ID", widgetId)
+                    intent.putExtra(UID, boardEntity?.uid)
+                    intent.putExtra(WIDGET_ID, widgetId)
                     sendBroadcast(intent)
 
                     this@SelectorActivity.finish()

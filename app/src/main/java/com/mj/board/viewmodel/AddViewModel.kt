@@ -4,6 +4,8 @@ import android.app.Application
 import android.text.Editable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.mj.board.application.Constant.EMPTY
+import com.mj.board.application.Constant.WHITE
 import com.mj.board.database.BoardEntity
 import com.mj.board.database.Repository
 import com.mj.board.util.Util
@@ -20,6 +22,8 @@ class AddViewModel(application: Application) : AndroidViewModel(application) {
 
     //색상 데이터
     var boardColor: MutableLiveData<String> = MutableLiveData()
+
+    var widgetId: MutableLiveData<Int> = MutableLiveData()
 
     var uid: MutableLiveData<Int> = MutableLiveData()
 
@@ -73,9 +77,9 @@ class AddViewModel(application: Application) : AndroidViewModel(application) {
                 repository.insertBoard(boardEntity)
 
                 withContext(Dispatchers.Main) {
-                    title.value = ""
-                    content.value = ""
-                    boardColor.value = "#ffffff"
+                    title.value = EMPTY
+                    content.value = EMPTY
+                    boardColor.value = WHITE
                     insertComplete?.let { it() }
                 }
             }
@@ -94,9 +98,9 @@ class AddViewModel(application: Application) : AndroidViewModel(application) {
                 repository.modifyBoard(boardEntity)
 
                 withContext(Dispatchers.Main) {
-                    title.value = ""
-                    content.value = ""
-                    boardColor.value = "#ffffff"
+                    title.value = EMPTY
+                    content.value = EMPTY
+                    boardColor.value = WHITE
                     insertComplete?.let { it() }
                 }
             }

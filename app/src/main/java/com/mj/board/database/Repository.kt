@@ -15,13 +15,15 @@ class Repository(context: Context){
     private val boardDao = boardDatabase!!.boardDao()
 
 
-    suspend fun getAllBoards(): MutableList<BoardEntity>{
-        return boardDao.getAll()
+    suspend fun getByLatestData(): MutableList<BoardEntity>{
+        return boardDao.getLatest()
+    }
+    suspend fun getByColorData(): MutableList<BoardEntity>{
+        return boardDao.getByColor()
     }
 
-    suspend fun findBoardsByTitle(title: String): MutableList<BoardEntity>{
-
-        return boardDao.findByTitle(title)
+    suspend fun findBoardsByTitle(keyword: String): MutableList<BoardEntity>{
+        return boardDao.findByTitle(keyword)
     }
 
     suspend fun insertBoard(boardEntity: BoardEntity){
@@ -39,4 +41,6 @@ class Repository(context: Context){
     suspend fun findBoardByUid(uid: Int): BoardEntity{
         return boardDao.findByUid(uid)
     }
+
+
 }

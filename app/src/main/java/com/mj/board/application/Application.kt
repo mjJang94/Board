@@ -15,7 +15,7 @@ class Application : Application() {
 
         startKoin {
             androidContext(this@Application)
-            modules(listOf(mainViewModelModule, addViewModelModule, detailViewModelModule, memoFragViewModel, selectorViewModel))
+            modules(listOf(mainViewModelModule, addViewModelModule, detailViewModelModule, selectorViewModel))
         }
     }
 
@@ -30,10 +30,6 @@ class Application : Application() {
 
     val detailViewModelModule = module {
         viewModel { DetailViewModel(androidApplication()) }
-    }
-
-    val memoFragViewModel = module {
-        viewModel { MemoFragViewModel(androidApplication()) }
     }
 
     val selectorViewModel = module {

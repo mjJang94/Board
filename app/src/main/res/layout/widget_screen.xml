@@ -8,15 +8,25 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@color/white"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
    <TextView
-       android:id="@+id/txt_widget"
-       android:layout_width="60dp"
-       android:layout_height="60dp"
+       android:id="@+id/txt_widget_select_memo"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
        android:gravity="center"
-       android:text="클릭하여\n메모선택"
-       android:fontFamily="@font/nanum_square_bold"
+       android:text="로딩중"
+       android:fontFamily="@font/nanum_square_round_extra_bold"
        android:textColor="@color/black_1a1a1a"
-       android:background="@color/white"/>
+       android:background="@color/transparent"/>
+
+   <TextView
+       android:id="@+id/txt_widget_select_title"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:gravity="center"
+       android:visibility="gone"
+       android:fontFamily="@font/nanum_square_round_extra_bold"
+       android:textColor="@color/black_1a1a1a"
+       android:background="@color/transparent"/>
 </LinearLayout>

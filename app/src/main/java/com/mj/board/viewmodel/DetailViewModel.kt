@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.mj.board.application.Constant
+import com.mj.board.application.Constant.WHITE
 import com.mj.board.database.BoardEntity
 import com.mj.board.database.Repository
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +23,8 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
     //수정하기 리스너
     var modifyClick: (() -> Unit)? = null
 
+    var widgetId: MutableLiveData<Int> = MutableLiveData()
+
     var uid: MutableLiveData<Int> = MutableLiveData()
 
     var date: MutableLiveData<String> = MutableLiveData()
@@ -32,7 +35,7 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
 
     var content: MutableLiveData<String> = MutableLiveData()
 
-    var color: MutableLiveData<String> = MutableLiveData("#ffffff")
+    var color: MutableLiveData<String> = MutableLiveData(WHITE)
 
 
     fun modifyClick() {

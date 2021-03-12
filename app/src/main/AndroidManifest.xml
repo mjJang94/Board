@@ -2,12 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mj.board">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".application.Application"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_app"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_app"
         android:supportsRtl="true"
         android:theme="@style/Theme.Board">
         <activity android:name=".ui.widget.SelectorActivity">
@@ -20,11 +22,23 @@
 
                 <data
                     android:host="list"
-                    android:scheme="select" />
+                    android:scheme="board" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.DetailActivity" />
+        <activity android:name=".ui.activity.DetailActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="detail"
+                    android:scheme="board" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".ui.activity.AddBoardActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -41,12 +55,20 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.action.MY_ACTION" />
                 <action android:name="android.action.SELECT" />
+                <action android:name="android.action.DETAIL" />
+                <action android:name="android.action.CHANGE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider" />
         </receiver>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4607545159100771~5832392902"/>
+
+
     </application>
 
 </manifest>

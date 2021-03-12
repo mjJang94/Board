@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Board</string>
+    <string name="common_save_complete">저장 완료!</string>
+    <string name="common_confirm">확인</string>
 </resources>
