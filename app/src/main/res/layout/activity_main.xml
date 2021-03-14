@@ -22,8 +22,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.google.android.gms.ads.AdView
@@ -33,7 +32,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 ads:adSize="BANNER"
-                ads:adUnitId="ca-app-pub-4607545159100771/3832915526"/>
+                ads:adUnitId="@string/banner_ad_unit_id_for_test"/>
 
         </LinearLayout>
 

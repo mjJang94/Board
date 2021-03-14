@@ -53,10 +53,10 @@
         <receiver android:name=".ui.widget.WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.action.MY_ACTION" />
-                <action android:name="android.action.SELECT" />
-                <action android:name="android.action.DETAIL" />
-                <action android:name="android.action.CHANGE" />
+                <action android:name="MY_ACTION" />
+                <action android:name="SELECT" />
+                <action android:name="DETAIL" />
+                <action android:name="CHANGE" />
             </intent-filter>
 
             <meta-data
@@ -66,7 +66,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4607545159100771~5832392902"/>
+            android:value="@string/admob_app_id"/>
 
 
     </application>

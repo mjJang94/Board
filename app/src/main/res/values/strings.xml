@@ -2,4 +2,8 @@
     <string name="app_name">Board</string>
     <string name="common_save_complete">저장 완료!</string>
     <string name="common_confirm">확인</string>
+
+    <string name="admob_app_id">ca-app-pub-4607545159100771~5832392902</string>
+    <string name="banner_ad_unit_id">ca-app-pub-4607545159100771/3832915526</string>
+    <string name="banner_ad_unit_id_for_test">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

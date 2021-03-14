@@ -9,9 +9,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 import com.mj.board.R
+import com.mj.board.application.Constant
 import com.mj.board.application.Constant.ACTION
 import com.mj.board.application.Constant.CHANGE
 import com.mj.board.application.Constant.DETAIL
@@ -34,7 +36,6 @@ class WidgetProvider : AppWidgetProvider() {
     //위젯 갱신 주기에 따라 위젯을 갱신할때 호출
     override fun onUpdate(context: Context?, appWidgetManager: AppWidgetManager?, appWidgetIds: IntArray?) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-
 
         appWidgetIds?.forEach { appWidgetId ->
 
@@ -59,7 +60,6 @@ class WidgetProvider : AppWidgetProvider() {
     //Broadcast 메시지가 왔을 때
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
-
 
         if (intent?.action == MY_ACTION) {
 
@@ -150,7 +150,7 @@ class WidgetProvider : AppWidgetProvider() {
 
     // 메모 선택 메소드
     private fun setSelectAction(context: Context?, appWidgetId: Int): PendingIntent {
-        val intent = Intent()
+        val intent = Intent(context, WidgetProvider::class.java)
         intent.action = MY_ACTION
         intent.putExtra(WIDGET_ID, appWidgetId)
         return PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -158,7 +158,7 @@ class WidgetProvider : AppWidgetProvider() {
 
     // 위젯 클릭 메소드
     private fun setContentClickAction(context: Context?, appWidgetId: Int, boardEntity: BoardEntity): PendingIntent {
-        val intent = Intent()
+        val intent = Intent(context, WidgetProvider::class.java)
         intent.action = DETAIL
         intent.putExtra(WIDGET_ID, appWidgetId)
         intent.putExtra(UID, boardEntity.uid)

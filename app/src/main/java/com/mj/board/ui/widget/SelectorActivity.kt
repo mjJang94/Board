@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -85,6 +86,7 @@ class SelectorActivity : AppCompatActivity() {
 
         inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
 
+            private var llArea: LinearLayout = view.findViewById(R.id.ll_row_area)
             private var txtTitle: TextView = view.findViewById(R.id.txt_selector_title)
             private var txtDate: TextView = view.findViewById(R.id.txt_selector_date)
 
@@ -96,8 +98,9 @@ class SelectorActivity : AppCompatActivity() {
 
                 }
 
-                txtTitle.setOnClickListener {
-                    val intent = Intent(action)
+                llArea.setOnClickListener {
+                    val intent = Intent(this@SelectorActivity, WidgetProvider::class.java)
+                    intent.action = action
                     intent.putExtra(UID, boardEntity?.uid)
                     intent.putExtra(WIDGET_ID, widgetId)
                     sendBroadcast(intent)
