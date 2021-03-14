@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.initialization.InitializationStatus
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener
@@ -132,52 +129,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun initAdmob(){
 
-
-
         MobileAds.initialize(this, object : OnInitializationCompleteListener{
             override fun onInitializationComplete(status: InitializationStatus?) {
-                Log.e("initAdmob", status.toString())
             }
         })
 
-        val adREquest = AdRequest.Builder().build()
-        binding.adView.loadAd(adREquest)
-        binding.adView.adListener = object : AdListener(){
-            override fun onAdImpression() {
-                super.onAdImpression()
-            }
-
-            override fun onAdLeftApplication() {
-                super.onAdLeftApplication()
-            }
-
-            override fun onAdClicked() {
-                super.onAdClicked()
-            }
-
-            override fun onAdFailedToLoad(p0: Int) {
-                super.onAdFailedToLoad(p0)
-            }
-
-            override fun onAdFailedToLoad(errorCode: LoadAdError?) {
-                super.onAdFailedToLoad(errorCode)
-
-                Log.d("@@@", "onAdFailedToLoad " + errorCode);
-            }
-
-            override fun onAdClosed() {
-                super.onAdClosed()
-            }
-
-            override fun onAdOpened() {
-                super.onAdOpened()
-            }
-
-            override fun onAdLoaded() {
-                super.onAdLoaded()
-                Log.d("@@@", "onAdLoaded");
-            }
-        }
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
     }
 
     private fun orderByData(){
