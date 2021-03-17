@@ -12,8 +12,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DetailViewModel(application: Application) : AndroidViewModel(application) {
 
+class DetailViewModel(application: Application) : AndroidViewModel(application) {
+    
     //viewmodel 내부에서 Repo 인스턴스 생성
     val repository = Repository(application)
 

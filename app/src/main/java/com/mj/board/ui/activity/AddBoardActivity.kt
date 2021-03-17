@@ -8,9 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.mj.board.R
 import com.mj.board.application.Constant
+import com.mj.board.application.Constant.CHANGE
 import com.mj.board.application.Constant.EMPTY
+import com.mj.board.application.Constant.SELECT
 import com.mj.board.application.Constant.WHITE
 import com.mj.board.databinding.ActivityAddBoardBinding
+import com.mj.board.ui.widget.WidgetProvider
 import com.mj.board.viewmodel.AddViewModel
 import org.koin.android.ext.android.inject
 import petrov.kristiyan.colorpicker.ColorPicker
@@ -45,8 +48,6 @@ class AddBoardActivity : AppCompatActivity() {
         viewModel.time.value = intent.getStringExtra(Constant.TIME)
         viewModel.date.value = intent.getStringExtra(Constant.DATE)
         viewModel.boardColor.value = intent.getStringExtra(Constant.COLOR) ?: "#ffcc80"
-//        binding.llColor.setBackgroundColor(Color.parseColor(viewModel.boardColor.value))
-
 
         viewModel.finishActivity = {
             this.finish()
@@ -92,8 +93,6 @@ class AddBoardActivity : AppCompatActivity() {
 
                 if (position >= 0) {
                     viewModel.boardColor.value = colors[position]
-//                    binding.llColor.setBackgroundColor(Color.parseColor(colors[position]))
-//                    binding.clMemo.setBackgroundColor(Color.parseColor(colors[position]))
                 }
             }
 
@@ -105,20 +104,20 @@ class AddBoardActivity : AppCompatActivity() {
         binding.etContent.setText(EMPTY)
         binding.etTitle.clearFocus()
         binding.etContent.clearFocus()
-//        binding.llColor.setBackgroundColor(Color.parseColor(viewModel.boardColor.value))
-
 
         //등록일경우는 아래 로직 제외
         if (viewModel.uid.value != -1) {
 
             //해당되는 id의 위젯이 있다면 내용 갱신
             if (viewModel.widgetId.value != -1) {
-                val intent = Intent(Constant.SELECT)
+                val intent = Intent(this, WidgetProvider::class.java)
+                intent.action = SELECT
                 intent.putExtra(Constant.UID, viewModel.uid.value!!)
                 intent.putExtra(Constant.WIDGET_ID, viewModel.widgetId.value!!)
                 sendBroadcast(intent)
             }
-            val intent = Intent(Constant.CHANGE)
+            val intent = Intent(this, WidgetProvider::class.java)
+            intent.action = CHANGE
             intent.putExtra(Constant.UID, viewModel.uid.value!!)
             sendBroadcast(intent)
         }
