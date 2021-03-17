@@ -17,6 +17,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     var searchKeyword: MutableLiveData<String> = MutableLiveData()
 
+    var adLoaded: MutableLiveData<Boolean> = MutableLiveData(false)
+
     var goToAddBoard: (() -> Unit) ?= null
 
     var filterBoard: (() -> Unit) ?= null
