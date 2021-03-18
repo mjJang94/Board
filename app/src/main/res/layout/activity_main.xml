@@ -27,23 +27,12 @@
             android:layout_height="56dp"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:fontFamily="@font/nanum_square_bold"
-                android:visibility="@{mainViewModel.adLoaded == true ? View.GONE : View.VISIBLE}"
-                android:textSize="14dp"
-                android:textColor="@color/gray_6D6969"
-                android:text="광고영역"/>
-
             <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:visibility="@{mainViewModel.adLoaded == true ? View.VISIBLE : View.GONE}"
                 ads:adSize="BANNER"
                 ads:adUnitId="@string/banner_ad_unit_id"/>
 

@@ -143,14 +143,12 @@ class MainActivity : AppCompatActivity() {
 
             override fun onAdFailedToLoad(errorCode: LoadAdError?) {
                 super.onAdFailedToLoad(errorCode)
-                viewModel.adLoaded.value = false
                 Log.d("@@@", "onAdFailedToLoad " + errorCode);
             }
 
 
             override fun onAdLoaded() {
                 super.onAdLoaded()
-                viewModel.adLoaded.value = true
                 Log.d("@@@", "onAdLoaded");
             }
         }
