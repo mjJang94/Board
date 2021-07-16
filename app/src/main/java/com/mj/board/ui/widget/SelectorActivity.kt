@@ -46,7 +46,6 @@ class SelectorActivity : AppCompatActivity() {
         binding.rcySelect.layoutManager = layoutManager
         binding.rcySelect.setHasFixedSize(true)
 
-
         action = intent.getStringExtra(ACTION)
         widgetId = intent.getIntExtra(WIDGET_ID, -1)
 

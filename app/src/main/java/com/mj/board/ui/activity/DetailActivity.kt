@@ -13,14 +13,16 @@ import com.mj.board.application.Constant.TIME
 import com.mj.board.application.Constant.TITLE
 import com.mj.board.application.Constant.UID
 import com.mj.board.application.Constant.WIDGET_ID
+import com.mj.board.databinding.ActivityAddBoardBinding
 import com.mj.board.databinding.ActivityDetailBinding
+import com.mj.board.util.ktx.dataBinding
 import com.mj.board.viewmodel.DetailViewModel
 import org.koin.android.ext.android.inject
 
 class DetailActivity : AppCompatActivity() {
 
     private val viewModel: DetailViewModel by inject()
-    private lateinit var binding: ActivityDetailBinding
+    private val binding: ActivityDetailBinding by dataBinding(R.layout.activity_detail)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,9 +38,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
-        binding.lifecycleOwner = this
-        binding.detailViewModel = viewModel
 
         //넘겨받은 데이터 구성
         viewModel.uid.value = intent.getIntExtra(UID, -1)
@@ -47,16 +46,19 @@ class DetailActivity : AppCompatActivity() {
         //수정하기 이동
         viewModel.modifyClick = {
 
-            val intent = Intent(this, AddBoardActivity::class.java)
-            intent.putExtra(WIDGET_ID, viewModel.widgetId.value!!)
-            intent.putExtra(UID, viewModel.uid.value!!)
-            intent.putExtra(BUTTON_NAME, "수정하기")
-            intent.putExtra(DATE, viewModel.date.value)
-            intent.putExtra(TIME, viewModel.time.value)
-            intent.putExtra(TITLE, viewModel.title.value)
-            intent.putExtra(CONTENT, viewModel.content.value)
-            intent.putExtra(COLOR, viewModel.color.value)
-            startActivity(intent)
+            Intent(this, AddBoardActivity::class.java).apply {
+                putExtra(WIDGET_ID, viewModel.widgetId.value!!)
+                putExtra(UID, viewModel.uid.value!!)
+                putExtra(BUTTON_NAME, "수정하기")
+                putExtra(DATE, viewModel.date.value)
+                putExtra(TIME, viewModel.time.value)
+                putExtra(TITLE, viewModel.title.value)
+                putExtra(CONTENT, viewModel.content.value)
+                putExtra(COLOR, viewModel.color.value)
+            }.also {
+                startActivity(it)
+            }
+
         }
 
         //뒤로가기

@@ -3,14 +3,20 @@ package com.mj.board.viewmodel
 import androidx.lifecycle.AndroidViewModel
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mj.board.application.Constant
 import com.mj.board.database.BoardEntity
 import com.mj.board.database.Repository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class MainViewModel(application: Application): AndroidViewModel(application) {
+class MainViewModel(application: Application): AndroidViewModel(application), CoroutineScope {
+
+    override val coroutineContext: CoroutineContext
+        get() = viewModelScope.coroutineContext
 
     //viewmodel 내부에서 Repo 인스턴스 생성
     val repository = Repository(application)
@@ -42,28 +48,28 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     //최신순 정보 불러오기
     fun getOrderByLatestData(){
-        GlobalScope.launch(Dispatchers.IO){
+        launch(Dispatchers.IO){
             boardData.postValue(repository.getByLatestData())
         }
     }
 
     //색상별 정보 불러오기
     fun getOrderByColorData(){
-        GlobalScope.launch(Dispatchers.IO){
+        launch(Dispatchers.IO){
             boardData.postValue(repository.getByColorData())
         }
     }
 
     //제목으로 검색하기
     fun findBoardByKeyword(keyword: String){
-        GlobalScope.launch(Dispatchers.IO){
+        launch(Dispatchers.IO){
             boardData.postValue(repository.findBoardsByTitle(keyword))
         }
     }
 
     //삭제
     fun deleteBoard(entity: BoardEntity){
-        GlobalScope.launch(Dispatchers.IO) {
+        launch(Dispatchers.IO) {
             repository.deleteBoard(entity)
 
             //카테고리별로 나누기
