@@ -7,7 +7,6 @@
     <data>
 
         <import type="android.graphics.Color"/>
-
         <variable
             name="addViewModel"
             type="com.mj.board.viewmodel.AddViewModel" />

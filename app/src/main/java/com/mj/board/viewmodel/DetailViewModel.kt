@@ -3,19 +3,18 @@ package com.mj.board.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.mj.board.application.Constant
 import com.mj.board.application.Constant.WHITE
 import com.mj.board.database.BoardEntity
 import com.mj.board.database.Repository
-import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
-class DetailViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
-
-    override val coroutineContext: CoroutineContext get() = viewModelScope.coroutineContext
-
+class DetailViewModel(application: Application) : AndroidViewModel(application) {
+    
     //viewmodel 내부에서 Repo 인스턴스 생성
     val repository = Repository(application)
 
@@ -50,7 +49,7 @@ class DetailViewModel(application: Application) : AndroidViewModel(application),
 
     fun findById(id: Int){
 
-        launch(Dispatchers.IO){
+        GlobalScope.launch(Dispatchers.IO){
 
             val info = repository.findBoardByUid(id)
 

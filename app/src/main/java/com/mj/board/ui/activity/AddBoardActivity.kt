@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import androidx.databinding.DataBindingUtil
 import com.mj.board.R
 import com.mj.board.application.Constant
 import com.mj.board.application.Constant.CHANGE
@@ -14,21 +14,15 @@ import com.mj.board.application.Constant.SELECT
 import com.mj.board.application.Constant.WHITE
 import com.mj.board.databinding.ActivityAddBoardBinding
 import com.mj.board.ui.widget.WidgetProvider
-import com.mj.board.util.ktx.dataBinding
 import com.mj.board.viewmodel.AddViewModel
-import kotlinx.coroutines.CoroutineScope
 import org.koin.android.ext.android.inject
 import petrov.kristiyan.colorpicker.ColorPicker
-import kotlin.coroutines.CoroutineContext
 
 
-class AddBoardActivity : AppCompatActivity(), CoroutineScope {
-
-    override val coroutineContext: CoroutineContext get() = lifecycleScope.coroutineContext
+class AddBoardActivity : AppCompatActivity() {
 
     private val viewModel: AddViewModel by inject()
-
-    private val binding: ActivityAddBoardBinding by dataBinding(R.layout.activity_add_board)
+    private lateinit var binding: ActivityAddBoardBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +34,10 @@ class AddBoardActivity : AppCompatActivity(), CoroutineScope {
 
     private fun init() {
 
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_board)
+        binding.lifecycleOwner = this
+        binding.addViewModel = viewModel
+
         viewModel.buttonName.value = intent.getStringExtra(Constant.BUTTON_NAME)
 
         //넘겨받은 데이터 구성
@@ -50,12 +48,6 @@ class AddBoardActivity : AppCompatActivity(), CoroutineScope {
         viewModel.time.value = intent.getStringExtra(Constant.TIME)
         viewModel.date.value = intent.getStringExtra(Constant.DATE)
         viewModel.boardColor.value = intent.getStringExtra(Constant.COLOR) ?: "#ffcc80"
-
-        if (viewModel.widgetId.value == -1) {
-            viewModel.mode = AddViewModel.Companion.MODE.ADD
-        } else {
-            viewModel.mode = AddViewModel.Companion.MODE.MODIFY
-        }
 
         viewModel.finishActivity = {
             this.finish()
@@ -118,25 +110,16 @@ class AddBoardActivity : AppCompatActivity(), CoroutineScope {
 
             //해당되는 id의 위젯이 있다면 내용 갱신
             if (viewModel.widgetId.value != -1) {
-                Intent(this, WidgetProvider::class.java)
-                    .apply {
-                        action = SELECT
-                        putExtra(Constant.UID, viewModel.uid.value!!)
-                        putExtra(Constant.WIDGET_ID, viewModel.widgetId.value!!)
-                    }.also {
-                        sendBroadcast(it)
-                    }
-
+                val intent = Intent(this, WidgetProvider::class.java)
+                intent.action = SELECT
+                intent.putExtra(Constant.UID, viewModel.uid.value!!)
+                intent.putExtra(Constant.WIDGET_ID, viewModel.widgetId.value!!)
+                sendBroadcast(intent)
             }
-
-            Intent(this, WidgetProvider::class.java)
-                .apply {
-                    action = CHANGE
-                    putExtra(Constant.UID, viewModel.uid.value!!)
-                }.also {
-                    sendBroadcast(it)
-                }
-
+            val intent = Intent(this, WidgetProvider::class.java)
+            intent.action = CHANGE
+            intent.putExtra(Constant.UID, viewModel.uid.value!!)
+            sendBroadcast(intent)
         }
         finish()
     }
