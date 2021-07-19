@@ -1,7 +1,6 @@
 package com.mj.board.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.mj.board.database.BoardEntity
 
 class MainItemViewModel: ViewModel(){
 

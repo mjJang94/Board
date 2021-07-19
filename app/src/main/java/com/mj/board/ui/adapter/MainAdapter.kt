@@ -31,7 +31,7 @@ class MainAdapter : ListAdapter<BoardEntity, MainAdapter.MainHolder>(DIFF_CALLBA
 
     object BindingAdapters {
         @JvmStatic
-        @BindingAdapter("boardItems")
+        @BindingAdapter("stickerItems")
         fun RecyclerView.setItems(items: List<BoardEntity>?) {
             val adapter = adapter as? MainAdapter
                 ?: MainAdapter().also { adapter = it }
